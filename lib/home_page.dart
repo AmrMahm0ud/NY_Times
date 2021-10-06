@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newyork_times/getMethods.dart';
+import 'package:newyork_times/constant.dart';
 import 'package:newyork_times/details_screen.dart';
 import 'package:newyork_times/network_linyar/newyork_bloc.dart';
 
@@ -28,8 +28,8 @@ class _HomePageState extends State<HomePage> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-              backgroundColor: GetMethods().getAppBarColor(),
-              title: Text((GetMethods().getAppBarTitle())),
+              backgroundColor: appBarColor,
+              title: Text((appBarText)),
               centerTitle: true,
               actions: [
                 Row(
