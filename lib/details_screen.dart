@@ -46,6 +46,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       SizedBox(
                         height: 10,
                       ),
+                      Text(widget.articleModel!.abstractArticle.toString()),
+                      SizedBox(
+                        height: 30,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -55,11 +59,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 30,
                       ),
-                      Image.network(
-                        widget.articleModel!.articlePhoto.toString(),
-                        fit: BoxFit.cover,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.network(
+                            widget.articleModel!.articlePhoto.toString()),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

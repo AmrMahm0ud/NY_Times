@@ -41,64 +41,53 @@ class _HomePageState extends State<HomePage> {
                     return ListView.builder(
                         itemCount: state.newyork!.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => DetailsScreen(
-                                            state.newyork![index])));
-                              });
-                            },
+                          return Padding(
+                            padding: const EdgeInsets.all(5),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.network(
-                                          state.newyork![index].articlePhoto
-                                              .toString(),
-                                          fit: BoxFit.scaleDown,
-                                          height: 50,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(state
-                                                .newyork![index].articleTitle
-                                                .toString()),
-                                            SizedBox(
-                                              height: 15,
-                                            ),
-                                            Text(state
-                                                .newyork![index].authorName
-                                                .toString())
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                    Icon(Icons.arrow_forward_ios_outlined),
-                                  ],
+                                ListTile(
+                                  title: Text(state.newyork![index].articleTitle
+                                      .toString()),
+                                  trailing:
+                                      Icon(Icons.arrow_forward_ios_outlined),
+                                  subtitle: Text(state
+                                      .newyork![index].authorName
+                                      .toString()),
+                                  leading: Container(
+                          width: MediaQuery.of(context).size.width/8,
+                          decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                          image: NetworkImage( state.newyork![index].articlePhoto.toString()),
+                          fit: BoxFit.cover
+                          ),
+                          ),
+                          ),
+                                  // leading: Image.network(
+                                  //   state.newyork![index].articlePhoto
+                                  //       .toString(),
+                                  //   fit: BoxFit.scaleDown,
+                                  //   height: 50,
+                                  // ),
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => DetailsScreen(
+                                                state.newyork![index])));
+                                  },
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(state.newyork![1].articlePublishedDate
-                                        .toString()),
-                                  ],
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 100),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(state
+                                          .newyork![1].articlePublishedDate
+                                          .toString()),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),
