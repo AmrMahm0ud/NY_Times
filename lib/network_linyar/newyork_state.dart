@@ -12,8 +12,9 @@ class NewyorkLoading extends NewyorkState {
 
 class NewyorkSuccess extends NewyorkState {
   bool isSuccess;
+  List<ArticleModel>? newyork;
 
-  NewyorkSuccess({this.isSuccess = false});
+  NewyorkSuccess( {this.isSuccess = false,this.newyork});
 }
 
 class NewyorkError extends NewyorkState {

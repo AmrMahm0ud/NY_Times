@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:newyork_times/listView.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newyork_times/details_screen.dart';
 import 'package:newyork_times/network_linyar/newyork_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   NewyorkBloc newyorkBloc = NewyorkBloc();
-  int? _index;
 
   @override
   void initState() {
@@ -33,55 +33,83 @@ class _HomePageState extends State<HomePage> {
               actions: [Icon(Icons.search), Icon(Icons.priority_high_rounded)],
             ),
             drawer: Drawer(),
-            body: ListViewBuilder(
-              index: _index,
-              itemCount: 10,
-              widget: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: Colors.green),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Title"),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text("By Line")
-                            ],
-                          )
-                        ],
-                      ),
-                      Icon(Icons.arrow_forward_ios_outlined),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text("Published Date"),
-                    ],
-                  )
-                ],
+            body: BlocProvider(
+              create: (context) => newyorkBloc,
+              child: BlocBuilder<NewyorkBloc, NewyorkState>(
+                builder: (context, state) {
+                  if (state is NewyorkSuccess) {
+                    return ListView.builder(
+                        itemCount: state.newyork!.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => DetailsScreen(
+                                            state.newyork![index])));
+                              });
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image.network(
+                                          state.newyork![index].articlePhoto
+                                              .toString(),
+                                          fit: BoxFit.scaleDown,
+                                          height: 50,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(state
+                                                .newyork![index].articleTitle
+                                                .toString()),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Text(state
+                                                .newyork![index].authorName
+                                                .toString())
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                    Icon(Icons.arrow_forward_ios_outlined),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(state.newyork![1].articlePublishedDate
+                                        .toString()),
+                                  ],
+                                )
+                              ],
+                            ),
+                          );
+                        });
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
-              id: 0,
             )));
   }
 }

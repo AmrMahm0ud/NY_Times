@@ -26,7 +26,7 @@ class NewyorkBloc extends Bloc<NewyorkEvent, NewyorkState> {
         newyorkList.add(ArticleModel.fromMap(element as Map<String, dynamic>));
       });
       print(newyorkList.length);
-      yield NewyorkSuccess(isSuccess: true);
+      yield NewyorkSuccess(isSuccess: true,newyork: newyorkList);
     } on Exception catch (e) {
       yield NewyorkError(error: e.toString());
       yield NewyorkNetWorkError(networkError: e.toString());
