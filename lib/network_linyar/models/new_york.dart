@@ -1,25 +1,53 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:newyork_times/Network_Linyar/models/results.dart';
-part 'new_york.g.dart';
-@JsonSerializable()
 class NewYork {
-  @JsonKey(name: "status")
-  String? status;
-  @JsonKey(name: "copyright")
-  String? copyright;
-  @JsonKey(name: "numResults")
-  int? numResults;
-  @JsonKey(name: "results")
-  NewYorkResult? results;
+  Result? results;
 
-  NewYork({
-      this.status, 
-      this.copyright, 
-      this.numResults, 
-      this.results});
-  factory NewYork.fromJson(Map<String, dynamic> json) =>
-      _$NewYorkFromJson(json);
-  Map<String, dynamic> toJson() => _$NewYorkToJson(this);
+  NewYork({this.results});
 
+  NewYork.fromJson(Map<String, dynamic> json) {
+    results = json['results'];
+  }
+}
 
+class Result {
+  String? source;
+  String? publishedDate;
+  String? byline;
+  String? title;
+  String? abstract;
+
+  Result({
+    this.source,
+    this.publishedDate,
+    this.byline,
+    this.title,
+    this.abstract,
+  });
+
+  Result.fromJson(Map<String, dynamic> json) {
+    source = json['source'];
+    publishedDate = json['publishedDate'];
+    byline = json['byline'];
+    title = json['title'];
+    abstract = json['abstract'];
+  }
+}
+
+class Media {
+  List<MediaMetadata>? mediaMetadata;
+
+  Media({this.mediaMetadata});
+
+  Media.fromJson(Map<String, dynamic> json) {
+    mediaMetadata = json['media-metadata'];
+  }
+}
+
+class MediaMetadata {
+  String? url;
+
+  MediaMetadata({this.url});
+
+  MediaMetadata.fromJson(Map<String, dynamic> json) {
+    url = json['url'];
+  }
 }

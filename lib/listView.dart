@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:newyork_times/details_screen.dart';
 
 class ListViewBuilder extends StatelessWidget {
-  ListViewBuilder( this._itemCount, this._index, this._widget, this._id);
-  int? _itemCount, _index;
-  Widget? _widget;
-  int?_id;
+  ListViewBuilder({this.itemCount, this.index, this.widget, this.id});
+  int? itemCount, index;
+  Widget? widget;
+  int?id;
 
   // void SetItemCount(int itemCount){
   //   this._itemCount=itemCount;
@@ -25,12 +25,12 @@ class ListViewBuilder extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
         itemBuilder: (BuildContext context, int _index) {
-          this._index = _index;
+          this.index = _index;
           return InkWell(onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (_)=>DetailsScreen(_id)));
-          },child: _widget!);
+            Navigator.push(context, MaterialPageRoute(builder: (_)=>DetailsScreen(id)));
+          },child: widget!);
         },
-        itemCount: _itemCount,
+        itemCount: itemCount,
       ),
     );
   }
