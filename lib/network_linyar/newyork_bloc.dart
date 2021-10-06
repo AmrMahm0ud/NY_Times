@@ -18,12 +18,14 @@ class NewyorkBloc extends Bloc<NewyorkEvent, NewyorkState> {
   ) async* {
     yield NewyorkLoading(isLoading: true);
     try {
-      List<NewYork> newyorkList = [];
+      List<ArticleModel> newyorkList = [];
       response = await Dio().get(
           "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=gFRTIQwAwAAgVvVemuXAprEFLTSs5hEG");
-      print(response.data);
       final result = response.data['results'] as List<dynamic>;
-      // newyorkList.add(NewYork.fromJson(result));
+      result.forEach((element) {
+        newyorkList.add(ArticleModel.fromMap(element as Map<String, dynamic>));
+      });
+      print(newyorkList.length);
       yield NewyorkSuccess(isSuccess: true);
     } on Exception catch (e) {
       yield NewyorkError(error: e.toString());

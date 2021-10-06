@@ -1,53 +1,38 @@
-class NewYork {
-  Result? results;
+class ArticleModel {
+  int? articleId;
+  String? articleSource;
+  String? articleSubsection;
+  String? articleTitle;
+  String? authorName;
+  String? articlePublishedDate;
+  String? articlePhoto;
+  String? abstractArticle;
+  final String blankPhoto =
+      "https://firebasestorage.googleapis.com/v0/b/flutter-chat-ec1f2.appspot.com/o/blankphoto.jpg?alt=media&token=174ed9ac-6577-499c-bc09-c58929edf3f3";
 
-  NewYork({this.results});
+  ArticleModel(
+      this.articleId,
+      this.articleSource,
+      this.articleSubsection,
+      this.articleTitle,
+      this.authorName,
+      this.articlePublishedDate,
+      this.articlePhoto,
+      this.abstractArticle);
 
-  NewYork.fromJson(Map<String, dynamic> json) {
-    results = json['results'];
-  }
-}
-
-class Result {
-  String? source;
-  String? publishedDate;
-  String? byline;
-  String? title;
-  String? abstract;
-
-  Result({
-    this.source,
-    this.publishedDate,
-    this.byline,
-    this.title,
-    this.abstract,
-  });
-
-  Result.fromJson(Map<String, dynamic> json) {
-    source = json['source'];
-    publishedDate = json['publishedDate'];
-    byline = json['byline'];
-    title = json['title'];
-    abstract = json['abstract'];
-  }
-}
-
-class Media {
-  List<MediaMetadata>? mediaMetadata;
-
-  Media({this.mediaMetadata});
-
-  Media.fromJson(Map<String, dynamic> json) {
-    mediaMetadata = json['media-metadata'];
-  }
-}
-
-class MediaMetadata {
-  String? url;
-
-  MediaMetadata({this.url});
-
-  MediaMetadata.fromJson(Map<String, dynamic> json) {
-    url = json['url'];
+  ArticleModel.fromMap(Map<String, dynamic> articleFromMap) {
+    this.articleId = articleFromMap['id'] as int;
+    this.articleSource = articleFromMap['source'] as String;
+    this.articleSubsection = articleFromMap['subsection'] as String;
+    this.articleTitle = articleFromMap['title'] as String;
+    this.authorName = articleFromMap['byline'] as String;
+    this.articlePublishedDate = articleFromMap['published_date'] as String;
+    this.abstractArticle = articleFromMap['abstract'] as String;
+    try {
+      this.articlePhoto =
+          articleFromMap['media'][0]['media-metadata'][2]['url'] as String;
+    } catch (error) {
+      this.articlePhoto = blankPhoto;
+    }
   }
 }
