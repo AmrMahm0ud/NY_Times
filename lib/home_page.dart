@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newyork_times/getMethods.dart';
 import 'package:newyork_times/details_screen.dart';
 import 'package:newyork_times/network_linyar/newyork_bloc.dart';
 
@@ -27,10 +28,28 @@ class _HomePageState extends State<HomePage> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.green[400],
-              title: Text(("NY Times Most Popular")),
+              backgroundColor: GetMethods().getAppBarColor(),
+              title: Text((GetMethods().getAppBarTitle())),
               centerTitle: true,
-              actions: [Icon(Icons.search), Icon(Icons.priority_high_rounded)],
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.search,
+                      size: 30,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Icon(
+                      Icons.more_vert,
+                      size: 30,
+                    )
+                  ],
+                ),
+              ],
             ),
             drawer: Drawer(),
             body: BlocProvider(
@@ -54,15 +73,17 @@ class _HomePageState extends State<HomePage> {
                                       .newyork![index].authorName
                                       .toString()),
                                   leading: Container(
-                          width: MediaQuery.of(context).size.width/8,
-                          decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                          image: NetworkImage( state.newyork![index].articlePhoto.toString()),
-                          fit: BoxFit.cover
-                          ),
-                          ),
-                          ),
+                                    width:
+                                        MediaQuery.of(context).size.width / 8,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: NetworkImage(state
+                                              .newyork![index].articlePhoto
+                                              .toString()),
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
                                   // leading: Image.network(
                                   //   state.newyork![index].articlePhoto
                                   //       .toString(),

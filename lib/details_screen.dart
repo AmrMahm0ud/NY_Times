@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newyork_times/getMethods.dart';
 
 import 'package:newyork_times/network_linyar/newyork_bloc.dart';
 import 'package:newyork_times/network_linyar/models/new_york.dart';
@@ -27,8 +28,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green[400],
-        title: Text(("NY Times Most Popular")),
+        backgroundColor:  GetMethods().getAppBarColor(),
+        title: Text((GetMethods().getAppBarTitle())),
         centerTitle: true,
       ),
       body: BlocProvider(
