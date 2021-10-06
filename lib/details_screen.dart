@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:newyork_times/network_linyar/newyork_bloc.dart';
 import 'package:newyork_times/network_linyar/models/new_york.dart';
 
@@ -56,10 +57,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       SizedBox(
                         height: 10,
                       ),
-
                       Image.network(
                         widget.articleModel!.articlePhoto.toString(),
-                        fit: BoxFit.cover,),
+                        fit: BoxFit.cover,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
