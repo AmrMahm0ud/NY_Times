@@ -6,6 +6,8 @@ import 'package:newyork_times/constant.dart';
 import 'package:newyork_times/details_screen.dart';
 import 'package:newyork_times/network_linyar/newyork_bloc.dart';
 
+import 'network_linyar/newyork_bloc.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -29,13 +31,13 @@ class _HomePageState extends State<HomePage> {
         home: Scaffold(
             appBar: AppBar(
               backgroundColor: appBarColor,
-              title: Text((appBarText)),
+              title: const Text((appBarText)),
               centerTitle: true,
               actions: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(
                       Icons.search,
                       size: 30,
@@ -51,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            drawer: Drawer(),
+            drawer: const Drawer(),
             body: BlocProvider(
               create: (context) => newyorkBloc,
               child: BlocBuilder<NewyorkBloc, NewyorkState>(
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                                   title: Text(state.newyork![index].articleTitle
                                       .toString()),
                                   trailing:
-                                      Icon(Icons.arrow_forward_ios_outlined),
+                                      const Icon(Icons.arrow_forward_ios_outlined),
                                   subtitle: Text(state
                                       .newyork![index].authorName
                                       .toString()),
@@ -94,8 +96,7 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) => DetailsScreen(
-                                                state.newyork![index])));
+                                            builder: (_) => DetailsScreen(state.newyork![index])));
                                   },
                                 ),
                                 Padding(
@@ -115,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                           );
                         });
                   }
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 },
