@@ -29,5 +29,3 @@ class NewyorkNetWorkError extends NewyorkState {
 
   NewyorkNetWorkError({this.networkError = "Network Error"});
 }
-
-//test
