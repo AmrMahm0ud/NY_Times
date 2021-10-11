@@ -62,56 +62,59 @@ class _HomePageState extends State<HomePage> {
                     return ListView.builder(
                         itemCount: state.newyork!.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  title: Text(state.newyork![index].articleTitle
-                                      .toString()),
-                                  trailing:
-                                      const Icon(Icons.arrow_forward_ios_outlined),
-                                  subtitle: Text(state
-                                      .newyork![index].authorName
-                                      .toString()),
-                                  leading: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 8,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(state
-                                              .newyork![index].articlePhoto
-                                              .toString()),
-                                          fit: BoxFit.cover),
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => DetailsScreen(state.newyork![index])));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(state.newyork![index].articleTitle
+                                        .toString()),
+                                    trailing:
+                                        const Icon(Icons.arrow_forward_ios_outlined),
+                                    subtitle: Text(state
+                                        .newyork![index].authorName
+                                        .toString()),
+                                    leading: Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 8,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: NetworkImage(state
+                                                .newyork![index].articlePhoto
+                                                .toString()),
+                                            fit: BoxFit.cover),
+                                      ),
                                     ),
+                                    // leading: Image.network(
+                                    //   state.newyork![index].articlePhoto
+                                    //       .toString(),
+                                    //   fit: BoxFit.scaleDown,
+                                    //   height: 50,
+                                    // ),
+
                                   ),
-                                  // leading: Image.network(
-                                  //   state.newyork![index].articlePhoto
-                                  //       .toString(),
-                                  //   fit: BoxFit.scaleDown,
-                                  //   height: 50,
-                                  // ),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => DetailsScreen(state.newyork![index])));
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 100),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(state
-                                          .newyork![index].articlePublishedDate
-                                          .toString()),
-                                    ],
-                                  ),
-                                )
-                              ],
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 100),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(state
+                                            .newyork![index].articlePublishedDate
+                                            .toString()),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         });
