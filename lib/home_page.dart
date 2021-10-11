@@ -106,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Text(state
-                                          .newyork![1].articlePublishedDate
+                                          .newyork![index].articlePublishedDate
                                           .toString()),
                                     ],
                                   ),
