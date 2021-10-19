@@ -29,7 +29,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  appBarColor,
-        title: Text((appBarText)),
+        title: Text(appBarText),
         centerTitle: true,
       ),
       body: BlocBuilder<NewyorkBloc, NewyorkState>(
@@ -42,11 +42,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(widget.articleModel!.articleTitle.toString()),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Text(widget.articleModel!.abstractArticle.toString()),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Row(
@@ -57,7 +57,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             .toString())
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     ClipRRect(
@@ -72,17 +72,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         Text(widget.articleModel!.articleSource.toString())
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
                   ],
                 ),
               ),
             );
           }
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         },

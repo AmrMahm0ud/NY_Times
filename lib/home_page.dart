@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    newyorkBloc.add(FetchData());
+    BlocProvider.of<NewyorkBloc>(context).add(FetchData());
     super.initState();
   }
 
@@ -50,70 +50,67 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         drawer: Drawer(),
-        body: BlocProvider(
-          create: (context) => newyorkBloc,
-          child: BlocBuilder<NewyorkBloc, NewyorkState>(
-            builder: (context, state) {
-              if (state is NewyorkSuccess) {
-                return ListView.builder(
-                    itemCount: state.newyork!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(state.newyork![index].articleTitle
-                                  .toString()),
-                              trailing: Icon(Icons.arrow_forward_ios_outlined),
-                              subtitle: Text(
-                                  state.newyork![index].authorName.toString()),
-                              leading: Container(
-                                width: MediaQuery.of(context).size.width / 8,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(state
-                                          .newyork![index].articlePhoto
-                                          .toString()),
-                                      fit: BoxFit.cover),
-                                ),
+        body: BlocBuilder<NewyorkBloc, NewyorkState>(
+          builder: (context, state) {
+            if (state is NewyorkSuccess) {
+              return ListView.builder(
+                  itemCount: state.newyork!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Text(state.newyork![index].articleTitle
+                                .toString()),
+                            trailing: Icon(Icons.arrow_forward_ios_outlined),
+                            subtitle: Text(
+                                state.newyork![index].authorName.toString()),
+                            leading: Container(
+                              width: MediaQuery.of(context).size.width / 8,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(state
+                                        .newyork![index].articlePhoto
+                                        .toString()),
+                                    fit: BoxFit.cover),
                               ),
-                              // leading: Image.network(
-                              //   state.newyork![index].articlePhoto
-                              //       .toString(),
-                              //   fit: BoxFit.scaleDown,
-                              //   height: 50,
-                              // ),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => DetailsScreen(
-                                            state.newyork![index])));
-                              },
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 100),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(state.newyork![1].articlePublishedDate
-                                      .toString()),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    });
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+                            // leading: Image.network(
+                            //   state.newyork![index].articlePhoto
+                            //       .toString(),
+                            //   fit: BoxFit.scaleDown,
+                            //   height: 50,
+                            // ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => DetailsScreen(
+                                          state.newyork![index])));
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 100),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(state.newyork![1].articlePublishedDate
+                                    .toString()),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  });
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ));
   }
 }
