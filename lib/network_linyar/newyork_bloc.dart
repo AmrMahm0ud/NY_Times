@@ -10,8 +10,8 @@ part 'newyork_state.dart';
 
 class NewyorkBloc extends Bloc<NewyorkEvent, NewyorkState> {
   NewyorkBloc() : super(NewyorkInitial());
-  var _response;
-  String _baseUrl =
+  late final _response;
+  final String _baseUrl =
       "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=gFRTIQwAwAAgVvVemuXAprEFLTSs5hEG";
 
   @override
