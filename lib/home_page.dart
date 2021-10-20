@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newyork_times/bloc/newyork/article_repo.dart';
 import 'package:newyork_times/constant.dart';
 import 'package:newyork_times/details_screen.dart';
 import 'package:newyork_times/bloc/newyork/newyork_bloc.dart';
@@ -14,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  NewyorkBloc newyorkBloc = NewyorkBloc();
+  NewyorkBloc newyorkBloc = NewyorkBloc(baseArticleRepository: ArticleRepository());
 
   Key? get key => null;
 
@@ -73,7 +74,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   buildWidget(state) => ListView.builder(
-      itemCount: state.newyork!.length,
+      itemCount: state.newyork?.length,
       itemBuilder: (BuildContext context, index) {
         return Padding(
           padding: const EdgeInsets.all(5),

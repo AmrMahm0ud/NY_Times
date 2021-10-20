@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newyork_times/bloc/newyork/article_repo.dart';
 import 'package:newyork_times/constant.dart';
 
 import 'package:newyork_times/bloc/newyork/newyork_bloc.dart';
@@ -16,7 +17,7 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  NewyorkBloc newyorkBloc = NewyorkBloc();
+  NewyorkBloc newyorkBloc = NewyorkBloc(baseArticleRepository: ArticleRepository());
 
   @override
   void initState() {

@@ -4,14 +4,12 @@ abstract class NewyorkState {}
 
 class NewyorkInitial extends NewyorkState {}
 
-class NewyorkLoading extends NewyorkState {
-}
-
+class NewyorkLoading extends NewyorkState {}
 
 class NewyorkSuccess extends NewyorkState {
   List<ArticleModel>? newyork;
 
-  NewyorkSuccess( {this.newyork});
+  NewyorkSuccess({this.newyork});
 }
 
 class NewyorkError extends NewyorkState {
@@ -25,3 +23,5 @@ class NewyorkNetWorkError extends NewyorkState {
 
   NewyorkNetWorkError({this.networkError = "Network Error"});
 }
+
+class NewyorkEmptyState extends NewyorkState {}
