@@ -29,7 +29,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  appBarColor,
-        title: Text(appBarText),
+        title:const Text(appBarText),
         centerTitle: true,
       ),
       body: BlocBuilder<NewyorkBloc, NewyorkState>(
@@ -68,7 +68,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Source:"),
+                        const Text("Source:"),
                         Text(widget.articleModel!.articleSource.toString())
                       ],
                     ),

@@ -27,13 +27,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: appBarColor,
-          title: Text((appBarText)),
+          title:const Text((appBarText)),
           centerTitle: true,
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const[
                 Icon(
                   Icons.search,
                   size: 30,
@@ -49,68 +49,69 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        drawer: Drawer(),
-        body: BlocBuilder<NewyorkBloc, NewyorkState>(
-          builder: (context, state) {
-            if (state is NewyorkSuccess) {
-              return ListView.builder(
-                  itemCount: state.newyork!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(state.newyork![index].articleTitle
-                                .toString()),
-                            trailing: Icon(Icons.arrow_forward_ios_outlined),
-                            subtitle: Text(
-                                state.newyork![index].authorName.toString()),
-                            leading: Container(
-                              width: MediaQuery.of(context).size.width / 8,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: NetworkImage(state
-                                        .newyork![index].articlePhoto
-                                        .toString()),
-                                    fit: BoxFit.cover),
-                              ),
-                            ),
-                            // leading: Image.network(
-                            //   state.newyork![index].articlePhoto
-                            //       .toString(),
-                            //   fit: BoxFit.scaleDown,
-                            //   height: 50,
-                            // ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => DetailsScreen(
-                                          state.newyork![index])));
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 100),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(state.newyork![1].articlePublishedDate
-                                    .toString()),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  });
+        drawer:const Drawer(),
+        body: BlocListener<NewyorkBloc , NewyorkState>(
+          listener: (context , state){
+            if (state is PushToDetailsScreenState){
             }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
           },
+          child: BlocBuilder<NewyorkBloc, NewyorkState>(
+            builder: (context, state) {
+              if (state is NewyorkSuccess) {
+                return ListView.builder(
+                    itemCount: state.newyork!.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Column(
+                          children: [
+                            ListTile(
+                              title: Text(state.newyork![index].articleTitle
+                                  .toString()),
+                              trailing:  const Icon(Icons.arrow_forward_ios_outlined),
+                              subtitle: Text(
+                                  state.newyork![index].authorName.toString()),
+                              leading: Container(
+                                width: MediaQuery.of(context).size.width / 8,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(state
+                                          .newyork![index].articlePhoto
+                                          .toString()),
+                                      fit: BoxFit.cover),
+                                ),
+                              ),
+                              onTap: () {
+                                BlocProvider.of<NewyorkBloc>(context).add(PushToDetailsScreen());
+
+                              },
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 100),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(state.newyork![1].articlePublishedDate
+                                      .toString()),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    });
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
         ));
   }
+   push(index,{state})=> Navigator.push(
+       context,
+       MaterialPageRoute(
+           builder: (_) => DetailsScreen(state.newyork![index])));
 }

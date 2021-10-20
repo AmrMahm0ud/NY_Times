@@ -10,27 +10,31 @@ part 'newyork_state.dart';
 
 class NewyorkBloc extends Bloc<NewyorkEvent, NewyorkState> {
   NewyorkBloc() : super(NewyorkInitial());
-  var _response;
-  String _baseUrl =
+  late final  _response;
+  final String _baseUrl =
       "https://api.nytimes.com/svc/mostpopular/v2/emailed/7.json?api-key=gFRTIQwAwAAgVvVemuXAprEFLTSs5hEG";
 
   @override
   Stream<NewyorkState> mapEventToState(
     NewyorkEvent event,
   ) async* {
-    yield NewyorkLoading(isLoading: true);
-    try {
-      List<ArticleModel> newyorkList = [];
-      _response = await Dio().get(_baseUrl);
-      final result = _response.data['results'] as List<dynamic>;
-      result.forEach((element) {
-        newyorkList.add(ArticleModel.fromMap(element as Map<String, dynamic>));
-      });
-      print(newyorkList.length);
-      yield NewyorkSuccess(isSuccess: true, newyork: newyorkList);
-    } on Exception catch (e) {
-      yield NewyorkError(error: e.toString());
-      yield NewyorkNetWorkError(networkError: e.toString());
+    List<ArticleModel> newyorkList = [];
+    if(event is FetchData){
+      yield NewyorkLoading();
+      try {
+        _response = await Dio().get(_baseUrl);
+        final result = _response.data['results'] as List<dynamic>;
+        for (var element in result) {
+          newyorkList.add(ArticleModel.fromMap(element as Map<String, dynamic>));
+        }
+        yield NewyorkSuccess(newyork: newyorkList);
+      } on Exception catch (e) {
+        yield NewyorkError(error: e.toString());
+        yield NewyorkNetWorkError(networkError: e.toString());
+      }
+    }
+    if(event is PushToDetailsScreen){
+      yield PushToDetailsScreenState();
     }
   }
 }
