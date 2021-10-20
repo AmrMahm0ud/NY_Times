@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newyork_times/constant.dart';
 
-import 'package:newyork_times/network_linyar/newyork_bloc.dart';
-import 'package:newyork_times/network_linyar/models/new_york.dart';
+import 'package:newyork_times/bloc/newyork/newyork_bloc.dart';
+import 'package:newyork_times/models/newyork/new_york.dart';
 
 class DetailsScreen extends StatefulWidget {
   final ArticleModel? articleModel;
@@ -41,16 +41,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.articleModel!.articleTitle.toString()),
+                    Text(widget.articleModel!.articleTitle!),
                     sizedBox(10),
-                    Text(widget.articleModel!.abstractArticle.toString()),
+                    Text(widget.articleModel!.abstractArticle!),
                     sizedBox(30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(widget.articleModel!.authorName.toString()),
-                        Text(widget.articleModel!.articlePublishedDate
-                            .toString())
+                        Text(widget.articleModel!.authorName!),
+                        Text(widget.articleModel!.articlePublishedDate!)
                       ],
                     ),
                     sizedBox(30),

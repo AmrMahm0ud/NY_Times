@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newyork_times/constant.dart';
 import 'package:newyork_times/details_screen.dart';
-import 'package:newyork_times/network_linyar/newyork_bloc.dart';
+import 'package:newyork_times/bloc/newyork/newyork_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,10 +55,10 @@ class _HomePageState extends State<HomePage> {
         body: BlocListener<NewyorkBloc, NewyorkState>(
           listener: (context, state) {
             if (state is NewyorkError) {
-              snackBarError(NewyorkError().error.toString());
+              snackBarError(state.error);
             }
             if (state is NewyorkNetWorkError) {
-              snackBarError(NewyorkNetWorkError().networkError.toString());
+              snackBarError(state.networkError);
             }
           },
           child: BlocBuilder<NewyorkBloc, NewyorkState>(
@@ -82,14 +82,14 @@ class _HomePageState extends State<HomePage> {
               ListTile(
                 title: Text(state.newyork![index].articleTitle.toString()),
                 trailing: const Icon(Icons.arrow_forward_ios_outlined),
-                subtitle: Text(state.newyork![index].authorName.toString()),
+                subtitle: Text(state.newyork![index].authorName),
                 leading: Container(
                   width: MediaQuery.of(context).size.width / 8,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
                         image: NetworkImage(
-                            state.newyork![index].articlePhoto.toString()),
+                            state.newyork![index].articlePhoto),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(state.newyork![index].articlePublishedDate.toString()),
+                    Text(state.newyork![index].articlePublishedDate),
                   ],
                 ),
               )

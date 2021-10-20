@@ -11,8 +11,6 @@ class ArticleModel {
       "https://firebasestorage.googleapis.com/v0/b/flutter-chat-ec1f2.appspot.com/o/blankphoto.jpg?alt=media&token=174ed9ac-6577-499c-bc09-c58929edf3f3";
 
   ArticleModel(
-
-
       this.articleId,
       this.articleSource,
       this.articleSubsection,
