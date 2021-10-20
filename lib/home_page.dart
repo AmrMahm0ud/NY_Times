@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   NewyorkBloc newyorkBloc = NewyorkBloc();
 
+  Key? get key => null;
+
   @override
   void initState() {
     BlocProvider.of<NewyorkBloc>(context).add(FetchData());
@@ -27,13 +29,13 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: appBarColor,
-          title:const Text((appBarText)),
+          title: const Text((appBarText)),
           centerTitle: true,
           actions: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const[
+              children: const [
                 Icon(
                   Icons.search,
                   size: 30,
@@ -49,67 +51,77 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        drawer:const Drawer(),
-        body: BlocListener<NewyorkBloc , NewyorkState>(
-          listener: (context , state){
-            if (state is PushToDetailsScreenState){
+        drawer: const Drawer(),
+        body: BlocListener<NewyorkBloc, NewyorkState>(
+          listener: (context, state) {
+            if (state is NewyorkError) {
+              snackBarError(NewyorkError().error.toString());
+            }
+            if (state is NewyorkNetWorkError) {
+              snackBarError(NewyorkNetWorkError().networkError.toString());
             }
           },
           child: BlocBuilder<NewyorkBloc, NewyorkState>(
             builder: (context, state) {
               if (state is NewyorkSuccess) {
-                return ListView.builder(
-                    itemCount: state.newyork!.length,
-                    itemBuilder: (BuildContext context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Column(
-                          children: [
-                            ListTile(
-                              title: Text(state.newyork![index].articleTitle
-                                  .toString()),
-                              trailing:  const Icon(Icons.arrow_forward_ios_outlined),
-                              subtitle: Text(
-                                  state.newyork![index].authorName.toString()),
-                              leading: Container(
-                                width: MediaQuery.of(context).size.width / 8,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: NetworkImage(state
-                                          .newyork![index].articlePhoto
-                                          .toString()),
-                                      fit: BoxFit.cover),
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => DetailsScreen(state.newyork![index])));
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 100),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(state.newyork![1].articlePublishedDate
-                                      .toString()),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      );
-                    });
+                return buildWidget(state);
               }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return loader();
             },
           ),
         ));
+  }
+
+  buildWidget(state) => ListView.builder(
+      itemCount: state.newyork!.length,
+      itemBuilder: (BuildContext context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(5),
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(state.newyork![index].articleTitle.toString()),
+                trailing: const Icon(Icons.arrow_forward_ios_outlined),
+                subtitle: Text(state.newyork![index].authorName.toString()),
+                leading: Container(
+                  width: MediaQuery.of(context).size.width / 8,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: NetworkImage(
+                            state.newyork![index].articlePhoto.toString()),
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) =>
+                              DetailsScreen(key, state.newyork![index])));
+                },
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 100),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(state.newyork![index].articlePublishedDate.toString()),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      });
+
+  loader() => const Center(
+        child: CircularProgressIndicator(),
+      );
+
+  void snackBarError(error) {
+    final snackBar = SnackBar(content: Text(error));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
