@@ -83,8 +83,10 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               onTap: () {
-                                BlocProvider.of<NewyorkBloc>(context).add(PushToDetailsScreen());
-
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => DetailsScreen(state.newyork![index])));
                               },
                             ),
                             Padding(
@@ -110,8 +112,4 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
   }
-   push(index,{state})=> Navigator.push(
-       context,
-       MaterialPageRoute(
-           builder: (_) => DetailsScreen(state.newyork![index])));
 }
